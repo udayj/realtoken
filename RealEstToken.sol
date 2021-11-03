@@ -1,35 +1,21 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-import "./RealEstToken.sol";
-import "./RealEstNFT.sol";
+contract RealEstToken is ERC20, Ownable {
+    uint256 private _cap;
+    constructor(uint256 _cap1) ERC20("RealEstToken","REAL") {
+        _mint(msg.sender, 100000 * 10 ** decimals());
+        _cap=_cap1;
+    }
 
-
-contract Coordinator {
-    
-    RealEstToken _rToken;
-    RealEstNFT _rNFT;
-    uint256 pricePerToken;
-    constructor(address tokenContractAddress, address nftContractAddress,uint _price) {
-        _rToken=RealEstToken(tokenContractAddress);
-        _rNFT=RealEstNFT(nftContractAddress);
-        pricePerToken=_price;
+    function cap() public view returns(uint256) {
+        return _cap;
     }
-    
-    function buyToken(uint256 _numTokens) public payable {
-        require(msg.value > _numTokens*pricePerToken,"Need more funds");
-        _rToken.mint(msg.sender,_numTokens*pricePerToken);
-        
+    function mint(address to, uint256 amount) public onlyOwner {
+        require(ERC20.totalSupply() + amount <= cap(), "ERC20Capped: cap exceeded");
+        _mint(to, amount);
     }
-    
-    function buyUnit(uint256 _project, uint256 _unitType) public {
-        
-        uint256 numTokensRequired= _project*_unitType*500;
-        _rToken.transferFrom(msg.sender,address(this),numTokensRequired);
-        _rNFT.mintNFT(_project,_unitType,msg.sender);
-    }
-    
-    
-    
 }
