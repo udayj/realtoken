@@ -1,0 +1,8 @@
+This project tokenizes an illiquid asset (specifically ownership of real estate units like condos) and integrates a DEX like the ones Uniswap provides to create a liquid market for such assets. In doing so it tries to solve problems like providing quick and early liquidity to real estate firms, potential upside to early backers for such projects ( i.e. buyers of tokens), ability to invest piecemeal as per convenience, a pluggable decentralized exchange for these assets (which helps turn an illiquid asset into a liquid asset), true price discovery (again through the price oracle on Uniswap V3 which makes price manipulation of such physical assets more difficult), better underwriting of these physical assets because of difficulty of manipulating price on the DEX. 
+
+
+The protocol is fairly simple and uses vanilla solidity, open-zeppelin libraries, apart from Uniswap V3. So, the work flow is as follows:-
+1. The real estate firm developing condos, creates an ERC20 token representing ownership stake in these condos and decides that you need for eg. 500 tokens to purchase a condo of type 1 and 1000 tokens to purchase a condo of type 2.
+2. The firm also creates a Uniswap V3 pool for these tokens and initializes it to a certain price.
+3. People (and indeed applications) can buy these ERC20 tokens directly from the developer (or from the Uniswap V3 pool created by the firm).
+4. People in possession of these tokens can freely trade the tokens on the decentralized pool for profit or can deposit these tokens with the firm in exchange for an NFT that represents complete ownership of a condo. (These NFTs again are tradeable).
