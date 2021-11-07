@@ -13,11 +13,9 @@ contract RealEstNFT is ERC721URIStorage, Ownable {
     
     constructor() ERC721("RealEstNFT", "RENFT") {}
     
-    function createProjectUnits() public onlyOwner {
-        
-    }
+    
 
-    function mintNFT(uint256 _project, uint256 _unitType, address buyer) public onlyOwner {
+    function mintNFT(uint256 _project, uint256 _unitType, address buyer) public {
         
         require(buyer != address(0));
         
